@@ -28,6 +28,10 @@ class SchemaConfigs:
         ],
         "posts_ai_analysis":[
             "id",
+            "title",
+            "author",
+            "flair",
+            "body",
             "category",
             "reasoning",
             "created_utc"
