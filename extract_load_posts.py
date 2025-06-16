@@ -20,11 +20,11 @@ def etl_posts():
     reddit_username = get_env_variable("reddit_username")
 
     # DB CONFIGS
-    user = get_env_variable("user")
-    password = get_env_variable("password")
-    host = get_env_variable("host")
-    port = get_env_variable("port")
-    dbname = get_env_variable("dbname")
+    USER = get_env_variable("user")
+    PASSWORD = get_env_variable("password")
+    HOST = get_env_variable("host")
+    PORT = get_env_variable("port")
+    DBNAME = get_env_variable("dbname")
 
     # Subreddit Configs
     SUBREDDIT_NAME = PostAPIConfigs.subreddit_name
@@ -34,7 +34,7 @@ def etl_posts():
     USER_AGENT = f"script:{SUBREDDIT_NAME}:1.0 (by u/{reddit_username})"
     POST_LIMIT = PostAPIConfigs.post_limit
 
-    try: 
+    try:
         PE = PostExtractor(
             subreddit_name=SUBREDDIT_NAME,
             client_id=CLIENT_ID,
@@ -48,9 +48,8 @@ def etl_posts():
         posts_data = PE.fetch_post_data()
 
         loader = DataLoader(
-            user=user, password=password, host=host, port=port, dbname=dbname
+            user=USER, password=PASSWORD, host=HOST, port=PORT, dbname=DBNAME
         )
-        
         print("Writing posts to remote database...")
 
         loader.write_data(
@@ -60,10 +59,8 @@ def etl_posts():
             write_method="upsert",
             upsert_on=["id"],
         )
-    
     except Exception as e:
         print(f"An error occurred {e}")
-    
 
 if __name__ == "__main__":
     etl_posts()
