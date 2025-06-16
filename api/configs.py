@@ -25,5 +25,10 @@ class SchemaConfigs:
             "author",
             "score",
             "created_utc"
+        ],
+        "posts_ai_analysis":[
+            "id",
+            "category",
+            "reasoning"
         ]
     }   
