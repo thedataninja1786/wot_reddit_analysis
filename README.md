@@ -5,7 +5,7 @@
 </div>
 
 <div align="center">
-    <img src="WoT.png" alt="WoT" width="85%">
+    <img src="WoT.png" alt="WoT" width="89%">
 </div>
 
 
