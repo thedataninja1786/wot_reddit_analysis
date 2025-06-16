@@ -2,8 +2,6 @@ import praw
 from typing import List, Dict, Tuple, Any
 from datetime import datetime
 from praw.models import Subreddit
-from chatbot import AIModerator
-from openai import OpenAI
 
 
 class PostExtractor:
