@@ -1,19 +1,10 @@
 from api.configs import PostAPIConfigs, SchemaConfigs
-import os
-
+from utils.utilities import get_env_variable
 from dotenv import load_dotenv
 from etl.extract_posts import PostExtractor
 from dataloader.load_data import DataLoader
 
 load_dotenv()
-
-
-def get_env_variable(var_name: str) -> str:
-    value = os.getenv(var_name)
-    if not value:
-        raise ValueError(f"Environment variable '{var_name}' is not set or empty.")
-    return value
-
 
 def etl_posts():
     # Reddit username
