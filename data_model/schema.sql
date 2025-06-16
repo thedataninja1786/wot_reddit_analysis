@@ -1,6 +1,10 @@
 -- Fact: AI moderator sentiment analysis and reasoning
 CREATE TABLE IF NOT EXISTS POSTS_AI_ANALYSIS(
     ID TEXT PRIMARY KEY,
+    TITLE TEXT,
+    AUTHOR TEXT,
+    FLAIR TEXT, 
+    BODY TEXT,
     CATEGORY TEXT,
     REASONING TEXT,
     CREATED_UTC TIMESTAMPTZ,
