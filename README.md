@@ -1,4 +1,8 @@
+<div align="center">
+
 # World of Tanks Reddit Data Extraction and Analysis
+
+</div>
 
 <div align="center">
     <img src="WoT.png" alt="WoT" width="85%">
