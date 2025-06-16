@@ -1,6 +1,11 @@
 # World of Tanks Reddit Data Extraction and Analysis
 
-This project provides an end-to-end Extract-Transform-Load (ETL) pipeline for Reddit data related to the World of Tanks community, enriched with AI-driven sentiment and categorization. It includes:
+<div align="center">
+    <img src="WoT.png" alt="WoT" width="78%">
+</div>
+
+
+Love (or hate) World of Tanks and curious about what the community is talking about? This project is your all-in-one toolkit for diving deep into Reddit discussions, featuring an ETL pipeline and smart AI analysis. Whether you want to track trends, analyze sentiment, or just geek out over tank talk, this repo helps you turn raw Reddit chatter into meaningful insights—because games (and their communities) deserve great data!
 
 - **Post ETL**: Extract posts from a subreddit, transform, and load into PostgreSQL.
 - **Comment ETL**: Extract and unnest comments recursively, transform, and load into PostgreSQL.
