@@ -29,6 +29,7 @@ class SchemaConfigs:
         "posts_ai_analysis":[
             "id",
             "category",
-            "reasoning"
+            "reasoning",
+            "created_utc"
         ]
     }   
