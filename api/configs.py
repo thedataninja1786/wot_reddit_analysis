@@ -31,7 +31,7 @@ class SchemaConfigs:
             "title",
             "author",
             "flair",
-            "body",
+            "selftext",
             "category",
             "reasoning",
             "created_utc"
