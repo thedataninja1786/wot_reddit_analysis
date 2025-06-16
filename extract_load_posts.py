@@ -1,0 +1,69 @@
+from api.configs import PostAPIConfigs, SchemaConfigs
+import os
+
+from dotenv import load_dotenv
+from etl.extract_posts import PostExtractor
+from dataloader.load_data import DataLoader
+
+load_dotenv()
+
+
+def get_env_variable(var_name: str) -> str:
+    value = os.getenv(var_name)
+    if not value:
+        raise ValueError(f"Environment variable '{var_name}' is not set or empty.")
+    return value
+
+
+def etl_posts():
+    # Reddit username
+    reddit_username = get_env_variable("reddit_username")
+
+    # DB CONFIGS
+    user = get_env_variable("user")
+    password = get_env_variable("password")
+    host = get_env_variable("host")
+    port = get_env_variable("port")
+    dbname = get_env_variable("dbname")
+
+    # Subreddit Configs
+    SUBREDDIT_NAME = PostAPIConfigs.subreddit_name
+    CLIENT_ID = get_env_variable("client_id")
+    SECRET = get_env_variable("secret")
+    TIMEOUT = PostAPIConfigs.timeout
+    USER_AGENT = f"script:{SUBREDDIT_NAME}:1.0 (by u/{reddit_username})"
+    POST_LIMIT = PostAPIConfigs.post_limit
+
+    try: 
+        PE = PostExtractor(
+            subreddit_name=SUBREDDIT_NAME,
+            client_id=CLIENT_ID,
+            secret=SECRET,
+            timeout=TIMEOUT,
+            user_agent=USER_AGENT,
+            post_limit=POST_LIMIT,
+        )
+
+        print("Fetching posts...")
+        posts_data = PE.fetch_post_data()
+
+        loader = DataLoader(
+            user=user, password=password, host=host, port=port, dbname=dbname
+        )
+        
+        print("Writing posts to remote database...")
+
+        loader.write_data(
+            table_name="posts",
+            data_rows=posts_data,
+            column_names=SchemaConfigs.table_mapping["posts"],
+            write_method="upsert",
+            upsert_on=["id"],
+        )
+    
+    except Exception as e:
+        print(f"An error occurred {e}")
+    
+
+if __name__ == "__main__":
+    etl_posts()
