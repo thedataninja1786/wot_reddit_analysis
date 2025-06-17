@@ -23,6 +23,7 @@ jobs:
       USER_NAME: ${{ secrets.REDDIT_USERNAME }}
       CLIENT_ID: ${{ secrets.CLIENT_ID }}
       CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      REDDIT_USERNAME: ${{ secrets.REDDIT_USERNAME }}
       API_KEY: ${{ secrets.API_KEY }}
     defaults:
       run:
