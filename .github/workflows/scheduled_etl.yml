@@ -1,6 +1,11 @@
 name: Scheduled ETL Pipeline
 
 on:
+  push:
+    - main
+  pull_request:
+    branches:
+      - main
   schedule:
     # Runs at 00:00, 08:00, and 16:00 UTC every day (every 8 hours)
     - cron: '0 */8 * * *'
@@ -28,7 +33,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
-          python-version: '3.x'
+          python-version: '3.11.9'
 
       - name: Install dependencies
         run: |
