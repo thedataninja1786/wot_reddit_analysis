@@ -9,11 +9,14 @@ from utils.utilities import get_env_variable
 load_dotenv()
 # Env vars
 API_KEY = get_env_variable("API_KEY")
-USER    = get_env_variable("user")
-PASSWORD= get_env_variable("password")
-HOST    = get_env_variable("host")
-PORT    = get_env_variable("port")
-DBNAME  = get_env_variable("dbname")
+USER    = get_env_variable("DB_USER")
+PASSWORD= get_env_variable("DB_PASSWORD")
+HOST    = get_env_variable("DB_HOST")
+PORT    = get_env_variable("DB_PORT")
+DBNAME  = get_env_variable("DB_NAME")
+CLIENT_ID = get_env_variable("CLIENT_ID")
+CLIENT_SECRET = get_env_variable("CLIENT_SECRET")
+REDDIT_USERNAME = get_env_variable("REDDIT_USERNAME")
 POST_LIMIT = PostAPIConfigs.post_limit
 
 # Clients
