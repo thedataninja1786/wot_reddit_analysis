@@ -2,7 +2,7 @@ class PostAPIConfigs:
     subreddit_name = "WorldofTanks"
     timeout = 10
     ratelimit_seconds = 60
-    post_limit = 150
+    post_limit = 200 # most recent posts
 
 class SchemaConfigs:
     table_mapping = {
