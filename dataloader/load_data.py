@@ -1,7 +1,6 @@
 import psycopg2
 import pandas as pd
 from typing import Tuple, List, Optional, Any
-import pandas as pd
 
 
 class DataLoader:
@@ -51,51 +50,52 @@ class DataLoader:
 
         try:
             with self._connect() as conn:
-                cursor = conn.cursor()
+                with conn.cursor() as cursor:
+                    cursor = conn.cursor()
 
-                if write_method == "replace":
-                    cursor.execute(f"DELETE FROM {table_name};")
-                    conn.commit()
-                    write_method = "append"  # append after replace
+                    if write_method == "replace":
+                        cursor.execute(f"DELETE FROM {table_name};")
+                        conn.commit()
+                        write_method = "append"  # append after replace
 
-                if write_method == "append":
-                    insert_query = f"""
-                        INSERT INTO {table_name} ({', '.join(column_names)})
-                        VALUES ({', '.join(['%s'] * len(column_names))});
-                    """
-                    cursor.executemany(insert_query, data_rows)
-                    conn.commit()
+                    if write_method == "append":
+                        insert_query = f"""
+                            INSERT INTO {table_name} ({', '.join(column_names)})
+                            VALUES ({', '.join(['%s'] * len(column_names))});
+                        """
+                        cursor.executemany(insert_query, data_rows)
+                        conn.commit()
 
-                elif write_method == "upsert":
-                    if upsert_on is None:
-                        raise ValueError(
-                            "upsert_on must be provided for upsert operations."
+                    elif write_method == "upsert":
+                        if upsert_on is None:
+                            raise ValueError(
+                                "upsert_on must be provided for upsert operations."
+                            )
+
+                        conflict_cols = ", ".join(upsert_on)
+                        update_cols = [col for col in column_names if col not in upsert_on]
+                        update_clause = ", ".join(
+                            [
+                                f"{col} = EXCLUDED.{col}"
+                                for col in update_cols
+                                if col != "processing_timestamp"
+                            ]
+                            + ["processing_timestamp = now()"]
                         )
 
-                    conflict_cols = ", ".join(upsert_on)
-                    update_cols = [col for col in column_names if col not in upsert_on]
-                    update_clause = ", ".join(
-                        [
-                            f"{col} = EXCLUDED.{col}"
-                            for col in update_cols
-                            if col != "processing_timestamp"
-                        ]
-                        + ["processing_timestamp = now()"]
-                    )
+                        upsert_query = f"""
+                            INSERT INTO {table_name} ({', '.join(column_names)})
+                            VALUES ({', '.join(['%s'] * len(column_names))})
+                            ON CONFLICT ({conflict_cols})
+                            DO UPDATE SET {update_clause};
+                        """
+                        cursor.executemany(upsert_query, data_rows)
+                        conn.commit()
 
-                    upsert_query = f"""
-                        INSERT INTO {table_name} ({', '.join(column_names)})
-                        VALUES ({', '.join(['%s'] * len(column_names))})
-                        ON CONFLICT ({conflict_cols})
-                        DO UPDATE SET {update_clause};
-                    """
-                    cursor.executemany(upsert_query, data_rows)
-                    conn.commit()
+                    else:
+                        raise NotImplementedError(f"{write_method} is not implemented!")
 
-                else:
-                    raise NotImplementedError(f"{write_method} is not implemented!")
-
-                print(f"Row data successfully {write_method} on table {table_name}!")
+                    print(f"Row data successfully {write_method} on table {table_name}!")
 
         except Exception as e:
             print(
@@ -112,10 +112,11 @@ class DataLoader:
             create_query = f"CREATE TABLE IF NOT EXISTS {table_name} ({columns});"
 
             with self._connect() as conn:
-                cursor = conn.cursor()
-                cursor.execute(create_query)
-                conn.commit()
-                print(f"Table '{table_name}' created successfully!")
+                with conn.cursor() as cursor:
+                    cursor = conn.cursor()
+                    cursor.execute(create_query)
+                    conn.commit()
+                    print(f"Table '{table_name}' created successfully!")
         except Exception as e:
             print(
                 f"{self.__class__.__name__} - {self.create_table.__name__}: an error "
@@ -128,11 +129,12 @@ class DataLoader:
 
         try:
             with self._connect() as conn:
-                cursor = conn.cursor()
-                drop_query = f"DROP TABLE IF EXISTS {table_name}"
-                cursor.execute(drop_query)
-                conn.commit()
-                print("Table dropped successfuly!")
+                with conn.cursor() as cursor:
+                    cursor = conn.cursor()
+                    drop_query = f"DROP TABLE IF EXISTS {table_name}"
+                    cursor.execute(drop_query)
+                    conn.commit()
+                    print("Table dropped successfuly!")
         except Exception as e:
             print(
                 f"{self.__class__.__name__} - {self.drop_table.__name__}: an error "
