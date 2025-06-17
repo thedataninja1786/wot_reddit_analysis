@@ -14,9 +14,6 @@ PASSWORD= get_env_variable("DB_PASSWORD")
 HOST    = get_env_variable("DB_HOST")
 PORT    = get_env_variable("DB_PORT")
 DBNAME  = get_env_variable("DB_NAME")
-CLIENT_ID = get_env_variable("CLIENT_ID")
-CLIENT_SECRET = get_env_variable("CLIENT_SECRET")
-REDDIT_USERNAME = get_env_variable("REDDIT_USERNAME")
 POST_LIMIT = PostAPIConfigs.post_limit
 
 # Clients
