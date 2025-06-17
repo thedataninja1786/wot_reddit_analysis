@@ -119,7 +119,6 @@ wot_reddit_data/
 ├── main.py                    # Single entry point for full pipeline
 ├── README.md                  # Project documentation
 ├── requirements.txt           # Python dependencies
-└── venv/                      # Virtual environment (ignored by Git)
 ```
 
 ## Database Schema
@@ -173,6 +172,13 @@ python -m etl.ai_analysis
 
 - **Lint**: `flake8` (configured in `setup.cfg` if present).
 - **Format**: `black .`
+
+## CI/CD and Automated Workflows
+
+This project uses GitHub Actions to automate the ETL pipeline on a schedule:
+
+- Workflow file: `.github/workflows/scheduled_etl.yml`
+- Runs `main.py` every 8 hours (at 00:00, 08:00, and 16:00 UTC) to keep data up to date.
 
 ## Contributing
 
