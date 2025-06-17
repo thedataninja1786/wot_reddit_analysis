@@ -20,9 +20,9 @@ jobs:
       DB_HOST: ${{ secrets.DB_HOST }}
       DB_PORT: ${{ secrets.DB_PORT }}
       DB_NAME: ${{ secrets.DB_NAME }}
-      REDDIT_USER_NAME: ${{ secrets.REDDIT_USERNAME }}
-      REDDIT_CLIENT_ID: ${{ secrets.CLIENT_ID }}
-      REDDIT_CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
+      USER_NAME: ${{ secrets.REDDIT_USERNAME }}
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      CLIENT_SECRET: ${{ secrets.CLIENT_SECRET }}
       API_KEY: ${{ secrets.API_KEY }}
     defaults:
       run:
