@@ -9,7 +9,7 @@
 </div>
 
 
-Love (or hate) World of Tanks and curious about what the community is talking about? This project is your all-in-one toolkit for diving deep into the subreddits' discussions, featuring an ETL pipeline and smart AI analysis. Whether you want to track trends, analyze sentiment, or just geek out over tank talk, this repo helps you turn chatter into meaningful insights—because games (and their communities) deserve great data!
+Love (or hate) World of Tanks and curious about what the community is talking about? This repo is your all-in-one toolkit for diving deep into the subreddits' discussions, featuring an ETL pipeline and smart AI analysis. Whether you want to track trends, analyze sentiment, or just geek out over tank talk, this repo helps you turn chatter into meaningful insights—because games (and their communities) deserve great data!
 
 - **Post ETL**: Extract posts from the World of Tanks subreddit, transform, and load into PostgreSQL.
 - **Comment ETL**: Extract comments from posts.
