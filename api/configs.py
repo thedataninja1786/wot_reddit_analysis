@@ -2,7 +2,7 @@ class PostAPIConfigs:
     subreddit_name = "WorldofTanks"
     timeout = 10
     ratelimit_seconds = 60
-    post_limit = 200 # most recent posts
+    post_limit = 450 # most recent posts
 
 class SchemaConfigs:
     table_mapping = {
@@ -34,6 +34,7 @@ class SchemaConfigs:
             "selftext",
             "category",
             "reasoning",
-            "created_utc"
+            "created_utc",
+            "embeddings",
         ]
     }   
