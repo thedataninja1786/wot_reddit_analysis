@@ -44,7 +44,7 @@ class PostAnalyzer:
         self, moderator: AIModerator, posts: List[Dict[str, Any]]
     ) -> List[Tuple[str, str, str, str, str, Optional[str], Optional[str], Any]]:
         """
-        Fetch ai analysis for new post and return a row-tuple for upsert.
+        Performs ai analysis and creates embeddings for a new post and return a row-tuple for upsert.
         """
         res = []
 
@@ -55,6 +55,8 @@ class PostAnalyzer:
                     title=post["title"],
                     selftext=post["selftext"],
                 )
+                text = post["selftext"] if post["selftext"] else post["flair"] + post["title"]
+                embeddings = moderator.generate_embeddings(text=text)
                 res.append(
                     (
                         post["id"],
@@ -65,6 +67,7 @@ class PostAnalyzer:
                         analysis.get("category"),
                         analysis.get("reasoning"),
                         post["created_utc"],
+                        embeddings,
                     )
                 )
             except Exception as e:
